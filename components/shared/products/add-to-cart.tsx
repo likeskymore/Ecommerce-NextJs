@@ -66,6 +66,7 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
       ) : (
         <Plus className="w-4 h-4" />
       )}
+      Add to cart
     </Button>
   );
 };
