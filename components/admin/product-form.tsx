@@ -36,13 +36,13 @@ const ProductForm = ({
   productId?: string;
 }) => {
   const router = useRouter();
-  const form = useForm<z.infer<typeof insertProductSchema>>({
-    resolver:
-      type === "Update"
-        ? zodResolver(updateProductSchema)
-        : zodResolver(insertProductSchema),
-    defaultValues:
-      product && type === "Update" ? product : productDefaultValues,
+  const schema = type === "Update" ? updateProductSchema : insertProductSchema;
+
+  const form = useForm<
+    z.infer<typeof schema> | z.infer<typeof updateProductSchema>
+  >({
+    resolver: zodResolver(schema),
+    defaultValues: product ?? productDefaultValues,
   });
 
   const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (
@@ -58,6 +58,12 @@ const ProductForm = ({
         router.push("/admin/products");
       }
     }
+
+    if (!productId) {
+      toast.error("Product ID is missing.");
+      return;
+    }
+
     const res = await updateProduct({ ...values, id: productId });
 
     if (!res.success) {
