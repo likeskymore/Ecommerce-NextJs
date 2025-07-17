@@ -1,4 +1,4 @@
-import { auth } from '@/auth';
+import { auth } from "@/auth";
 import {
   Table,
   TableBody,
@@ -6,37 +6,40 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { deleteOrder, getAllOrders } from '@/lib/actions/order.actions';
-import { formatCurrency, formatDateTime, formatId } from '@/lib/utils';
-import { Metadata } from 'next';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import Pagination from '@/components/shared/pagination';
-import DeleteDialog from '@/components/shared/delete-dialog';
+} from "@/components/ui/table";
+import { deleteOrder, getAllOrders } from "@/lib/actions/order.actions";
+import { formatCurrency, formatDateTime, formatId } from "@/lib/utils";
+import { Metadata } from "next";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Pagination from "@/components/shared/pagination";
+import DeleteDialog from "@/components/shared/delete-dialog";
+import { requireAdmin } from "@/lib/auth-guard";
 
 export const metadata: Metadata = {
-  title: 'Admin Orders',
+  title: "Admin Orders",
 };
 
 const AdminOrdersPage = async (props: {
   searchParams: Promise<{ page: string }>;
 }) => {
-  const { page = '1' } = await props.searchParams;
+  await requireAdmin();
+
+  const { page = "1" } = await props.searchParams;
 
   const session = await auth();
 
-  if (session?.user?.role !== 'admin')
-    throw new Error('User is not authorized');
+  if (session?.user?.role !== "admin")
+    throw new Error("User is not authorized");
 
   const orders = await getAllOrders({
     page: Number(page),
   });
 
   return (
-    <div className='space-y-2'>
-      <h2 className='h2-bold'>Orders</h2>
-      <div className='overflow-x-auto'>
+    <div className="space-y-2">
+      <h2 className="h2-bold">Orders</h2>
+      <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -59,18 +62,18 @@ const AdminOrdersPage = async (props: {
                 <TableCell>
                   {order.isPaid && order.paidAt
                     ? formatDateTime(order.paidAt).dateTime
-                    : 'Not Paid'}
+                    : "Not Paid"}
                 </TableCell>
                 <TableCell>
                   {order.isDelivered && order.deliveredAt
                     ? formatDateTime(order.deliveredAt).dateTime
-                    : 'Not Delivered'}
+                    : "Not Delivered"}
                 </TableCell>
                 <TableCell>
-                  <Button asChild variant='outline' size='sm'>
+                  <Button asChild variant="outline" size="sm">
                     <Link href={`/order/${order.id}`}>Details</Link>
                   </Button>
-                  <DeleteDialog id={order.id} action={deleteOrder}/>
+                  <DeleteDialog id={order.id} action={deleteOrder} />
                 </TableCell>
               </TableRow>
             ))}

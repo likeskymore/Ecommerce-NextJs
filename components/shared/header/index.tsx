@@ -6,7 +6,7 @@ import Menu from "./menu";
 const Header = () => {
   return (
     <header className="w-full border-b">
-      <div className="wraper flex-between">
+      <div className="wraper flex-between px-4 md:px-8 lg:px-16">
         <div className="flex-start">
           <Link href="/" className="flex-start">
             <Image
@@ -15,6 +15,7 @@ const Header = () => {
               height={48}
               width={48}
               priority={true}
+              className="mt-1 mb-1"
             />
             <span className="hidden lg:block font-bold text-2xl ml-3">
               {APP_NAME}
