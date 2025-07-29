@@ -3,7 +3,7 @@
 import { Cart } from "@/types";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.action";
+import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions";
 import { ArrowRight, Loader, Minus, Plus } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";

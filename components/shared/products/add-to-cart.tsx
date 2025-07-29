@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Plus, Minus, Loader } from "lucide-react";
 import { toast } from "sonner";
-import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.action";
+import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions";
 import { useTransition } from "react";
 
 const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
