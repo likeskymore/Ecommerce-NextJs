@@ -59,18 +59,20 @@ const ProductForm = ({
       }
     }
 
-    if (!productId) {
-      toast.error("Product ID is missing.");
-      return;
-    }
+    if (type === "Update") {
+      if (!productId) {
+        toast.error("Product ID is missing.");
+        return;
+      }
 
-    const res = await updateProduct({ ...values, id: productId });
+      const res = await updateProduct({ ...values, id: productId });
 
-    if (!res.success) {
-      toast.error(res.message);
-    } else {
-      toast(res.message);
-      router.push("/admin/products");
+      if (!res.success) {
+        toast.error(res.message);
+      } else {
+        toast(res.message);
+        router.push("/admin/products");
+      }
     }
   };
 
