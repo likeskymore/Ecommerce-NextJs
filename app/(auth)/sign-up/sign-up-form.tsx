@@ -85,7 +85,7 @@ const SignUpForm = () => {
 
         <div className='text-sm text-center text-muted-foreground'>
           Already have an account?{' '}
-          <Link href='/sign-in' target='_self' className='link'>
+          <Link href='/sign-in' target='_self' className='text-blue-600 link'>
             Sign In
           </Link>
         </div>
